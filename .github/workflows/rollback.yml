@@ -1,0 +1,36 @@
+name: Rollback Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      rollback_tag:
+        description: "Docker image tag to rollback to"
+        required: true
+        default: "latest-stable"
+
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set rollback version
+      run: |
+        echo "Rolling back to tag: ${{ github.event.inputs.rollback_tag }}"
+
+    - name: Update deployment file
+      run: |
+        sed -i "s/image: .*/image: yourdockerhubusername\/webops-test:${{ github.event.inputs.rollback_tag }}/" app/deployment.yaml
+
+    - name: Commit rollback changes
+      run: |
+        git config user.name "github-actions"
+        git config user.email "actions@github.com"
+        git add .
+        git commit -m "Rollback to ${{ github.event.inputs.rollback_tag }}"
+        git push
+
+    - name: Notify Rollback Complete
+      run: echo "Rollback successful!"
