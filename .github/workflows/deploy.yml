@@ -18,6 +18,7 @@ jobs:
         - api-gateway
         - billing-service
         - user-auth-service
+        - user-count
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
