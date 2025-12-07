@@ -13,7 +13,7 @@ spec:
         app: payment-service
     spec:
       containers:
-      - image: yourdockerhub/payment-service:latest
+      - image: yourdockerhub/payment-service:1.2.3
         name: payment-service
         ports:
         - containerPort: 8001
