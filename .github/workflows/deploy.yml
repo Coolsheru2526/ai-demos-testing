@@ -16,6 +16,7 @@ jobs:
         - lighting-service
         - payment-service
         - api-gateway
+        - billing-service
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
