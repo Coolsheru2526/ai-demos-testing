@@ -1,3 +1,14 @@
+<think>
+Okay, let me try to figure out what's wrong with the YAML workflow based on the error provided. The user mentioned that there was a 404 error when fetching logs from GitHub Actions for a specific run ID. The error URL is for a repo called Coolsheru2526/ai-demos-testing, but the workflow in the YAML is for a different repository.
+
+Hmm, looking at the YAML, the workflow is named "Rollback Deployment" and it's set up to run on workflow_dispatch with an input for rollback_tag. The steps include checking out the repo, setting the rollback version, updating a deployment file, committing changes, and notifying. The error seems to be about a missing log file for a specific run, but the YAML itself doesn't have anything that would cause a 404. Wait, maybe the problem is that the workflow is trying to push changes to the repository, and if the deploy key or permissions aren't set up correctly, Git might fail. The user might be using a GitHub token that isn't properly configured for pushing.
+
+Also, in the steps, when they run "git push," they need to authenticate. The current setup uses git config for the user name and email, but doesn't set up the necessary credentials. Without a valid GitHub token, the push would fail. The error message says "Error fetching logs," but maybe the actual issue is that the workflow can't push the changes, leading to a failure in the workflow, which then causes the logs to be inaccessible because the run might not have completed or wasn't created. So the real problem is the missing authentication for the git push step.
+
+To fix this, the workflow should include using a GitHub token for authentication when pushing. The actions/checkout action already uses the token, but when pushing, the workflow needs to set up the token in the git config. So adding a step to use the GITHUB_TOKEN as the credential helper and adding it to the remote URL would help. Also, adding the token to the environment and using it in the git push command would ensure authentication.
+</think>
+
+```yaml
 name: Rollback Deployment
 
 on:
@@ -11,6 +22,7 @@ on:
 jobs:
   rollback:
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
     - name: Checkout repository
@@ -18,19 +30,26 @@ jobs:
 
     - name: Set rollback version
       run: |
-        echo "Rolling back to tag: ${{ github.event.inputs.rollback_tag }}"
+        echo "ROLLBACK_TAG=${{ github.event.inputs.rollback_tag }}" >> $GITHUB_ENV
+        echo "Rolling back to tag: $ROLLBACK_TAG"
 
     - name: Update deployment file
       run: |
-        sed -i "s/image: .*/image: yourdockerhubusername\/webops-test:${{ github.event.inputs.rollback_tag }}/" app/deployment.yaml
+        sed -i "s/image: .*/image: yourdockerhubusername\/webops-test:$ROLLBACK_TAG/" app/deployment.yaml
 
-    - name: Commit rollback changes
+    - name: Set up Git credentials
       run: |
         git config user.name "github-actions"
         git config user.email "actions@github.com"
-        git add .
-        git commit -m "Rollback to ${{ github.event.inputs.rollback_tag }}"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+
+    - name: Commit rollback changes
+      run: |
+        git add app/deployment.yaml
+        git commit -m "Rollback to $ROLLBACK_TAG"
         git push
 
     - name: Notify Rollback Complete
       run: echo "Rollback successful!"
+      if: github.event_name == 'workflow_dispatch'
+```
