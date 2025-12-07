@@ -19,6 +19,7 @@ jobs:
         - billing-service
         - user-auth-service
         - user-count
+        - notification-service
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
