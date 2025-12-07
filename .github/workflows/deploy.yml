@@ -1,5 +1,5 @@
 name: Build & Push Services
-'on':
+on:
   push:
     branches:
     - main
@@ -16,7 +16,6 @@ jobs:
         - lighting-service
         - payment-service
         - api-gateway
-        - billing-service
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
