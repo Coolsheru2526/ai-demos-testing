@@ -23,7 +23,6 @@ jobs:
         - cloudfare-service
         - zomato-service
         - dance-service
-        - retail-service
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
