@@ -16,4 +16,4 @@ spec:
       - image: shreyansh2005/zomato-service:latest
         name: zomato-service
         ports:
-        - containerPort: 8000
+        - containerPort: 8001
