@@ -13,7 +13,7 @@ spec:
         app: billing-service
     spec:
       containers:
-      - image: yourdockerhub/billing-service:v1.7.2
+      - image: yourdockerhub/billing-service:v1.8.2
         name: billing-service
         ports:
         - containerPort: 4000
