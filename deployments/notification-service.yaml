@@ -13,7 +13,7 @@ spec:
         app: notification-service
     spec:
       containers:
-      - image: shreyansh2005/notification-service:latest
+      - image: shreyasnhcool2345/notification-service:latest
         name: notification-service
         ports:
-        - containerPort: 5000
+        - containerPort: 1085
