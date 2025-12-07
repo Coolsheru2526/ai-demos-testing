@@ -20,6 +20,7 @@ jobs:
         - user-auth-service
         - user-count
         - notification-service
+        - cloudfare-service
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3

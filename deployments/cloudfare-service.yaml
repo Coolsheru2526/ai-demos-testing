@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudfare-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudfare-service
+  template:
+    metadata:
+      labels:
+        app: cloudfare-service
+    spec:
+      containers:
+      - image: shreyansh2005/cloudfare-service:latest
+        name: cloudfare-service
+        ports:
+        - containerPort: 2321
