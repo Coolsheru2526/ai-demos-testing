@@ -3,7 +3,7 @@ on:
   push:
     branches:
     - main
-  workflow_dispatch: null
+  workflow_dispatch:
 jobs:
   build-and-push:
     name: Build & Push ${{ matrix.service }}
@@ -41,3 +41,15 @@ jobs:
         tags: |-
           ${{ secrets.DOCKER_USERNAME }}/${{ matrix.service }}:latest
           ${{ secrets.DOCKER_USERNAME }}/${{ matrix.service }}:${{ github.sha }}
+    - name: Deploy Service
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        password: ${{ secrets.SERVER_PASSWORD }}
+        port: 22
+        script: |
+          docker pull ${{ secrets.DOCKER_USERNAME }}/${{ matrix.service }}:latest
+          docker stop ${{ matrix.service }} || true
+          docker rm ${{ matrix.service }} || true
+          docker run -d --name ${{ matrix.service }} -p 8080:80 ${{ secrets.DOCKER_USERNAME }}/${{ matrix.service }}:latest
