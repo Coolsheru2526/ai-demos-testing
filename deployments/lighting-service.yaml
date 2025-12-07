@@ -16,4 +16,4 @@ spec:
       - image: yourdockerhub/lighting-service:latest
         name: lighting-service
         ports:
-        - containerPort: 8009
+        - containerPort: 8002

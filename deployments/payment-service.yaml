@@ -16,4 +16,4 @@ spec:
       - image: yourdockerhub/payment-service:latest
         name: payment-service
         ports:
-        - containerPort: 8000
+        - containerPort: 8001

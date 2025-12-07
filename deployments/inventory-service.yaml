@@ -18,7 +18,7 @@ spec:
         - name: inventory-service
           image: yourdockerhubusername/inventory-service:latest
           ports:
-            - containerPort: 8001
+            - containerPort: 8003
           env:
             - name: SERVICE_NAME
               value: "inventory-service"
@@ -33,5 +33,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8001
+      targetPort: 8003
   type: ClusterIP
