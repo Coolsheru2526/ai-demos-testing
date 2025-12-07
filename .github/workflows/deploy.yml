@@ -1,5 +1,5 @@
 name: Build & Push Services
-on:
+true:
   push:
     branches:
     - main
@@ -16,7 +16,6 @@ jobs:
         - lighting-service
         - payment-service
         - api-gateway
-        - billing-service
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
@@ -36,8 +35,3 @@ jobs:
         tags:
         - ${{ secrets.DOCKER_USERNAME }}/${{ matrix.service }}:latest
         - ${{ secrets.DOCKER_USERNAME }}/${{ matrix.service }}:${{ github.sha }}
-'on':
-  push:
-    branches:
-    - main
-  workflow_dispatch: null
