@@ -13,7 +13,10 @@ spec:
         app: payment-service
     spec:
       containers:
-      - image: yourdockerhub/payment-service:1.2.3
+      - env:
+        - name: DATABASE_URL
+          value: postgresql://prod-db:5432/mydb
+        image: yourdockerhub/payment-service:1.2.3
         name: payment-service
         ports:
         - containerPort: 8001
