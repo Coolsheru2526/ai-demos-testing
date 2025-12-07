@@ -21,6 +21,7 @@ jobs:
         - user-count
         - notification-service
         - cloudfare-service
+        - zomato-service
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
