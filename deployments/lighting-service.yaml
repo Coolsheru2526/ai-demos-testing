@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lighting-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lighting-service
+  template:
+    metadata:
+      labels:
+        app: lighting-service
+    spec:
+      containers:
+      - image: yourdockerhub/lighting-service:latest
+        name: lighting-service
+        ports:
+        - containerPort: 8009
