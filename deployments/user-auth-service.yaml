@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-auth-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-auth-service
+  template:
+    metadata:
+      labels:
+        app: user-auth-service
+    spec:
+      containers:
+      - image: shreyansh2005/user-auth-service:latest
+        name: user-auth-service
+        ports:
+        - containerPort: 3000
