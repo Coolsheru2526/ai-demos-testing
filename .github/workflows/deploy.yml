@@ -3,7 +3,7 @@ on:
   push:
     branches:
     - main
-  workflow_dispatch: null
+  workflow_dispatch:
 jobs:
   build-and-push:
     name: Build & Push ${{ matrix.service }}
@@ -22,6 +22,7 @@ jobs:
         - cloudfare-service
         - zomato-service
         - analytics-service
+        - dance-service
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
