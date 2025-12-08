@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queuing-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: queuing-service
+  template:
+    metadata:
+      labels:
+        app: queuing-service
+    spec:
+      containers:
+      - image: shreyasnhcool2345/queuing-service:latest
+        name: queuing-service
+        ports:
+        - containerPort: 6043

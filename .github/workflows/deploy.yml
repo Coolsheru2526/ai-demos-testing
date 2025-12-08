@@ -23,6 +23,7 @@ jobs:
         - zomato-service
         - analytics-service
         - dance-service
+        - queuing-service
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
