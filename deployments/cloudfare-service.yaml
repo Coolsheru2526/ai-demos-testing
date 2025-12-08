@@ -13,7 +13,10 @@ spec:
         app: cloudfare-service
     spec:
       containers:
-      - image: shreyansh2005/cloudfare-service:latest
+      - env:
+        - name: DATABASE_URL
+          value: postgresql://analytics-db:5432/analytics
+        image: shreyansh2005/cloudfare-service:latest
         name: cloudfare-service
         ports:
         - containerPort: 2321
