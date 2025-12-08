@@ -19,7 +19,7 @@ jobs:
         - billing-service
         - user-auth-service
         - notification-service
-        - cloudfare-service
+        - cloudflare-service
         - zomato-service
         - analytics-service
         - dance-service
