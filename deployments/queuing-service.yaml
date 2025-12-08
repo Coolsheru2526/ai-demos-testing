@@ -13,7 +13,10 @@ spec:
         app: queuing-service
     spec:
       containers:
-      - image: shreyasnhcool2345/queuing-service:latest
+      - env:
+        - name: DATABASE_URL
+          value: postgresql://analytics-db:5432/analytics
+        image: shreyasnhcool2345/queuing-service:latest
         name: queuing-service
         ports:
         - containerPort: 6043
