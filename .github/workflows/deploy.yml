@@ -24,6 +24,7 @@ jobs:
         - analytics-service
         - dance-service
         - queuing-service
+        - wayfind-service
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3

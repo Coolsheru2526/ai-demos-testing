@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wayfind-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wayfind-service
+  template:
+    metadata:
+      labels:
+        app: wayfind-service
+    spec:
+      containers:
+      - image: shreyasnhcool2345/wayfind-service:latest
+        name: wayfind-service
+        ports:
+        - containerPort: 1323
