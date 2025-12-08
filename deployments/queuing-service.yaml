@@ -16,7 +16,7 @@ spec:
       - env:
         - name: DATABASE_URL
           value: postgresql://analytics-db:5432/analytics
-        image: shreyasnhcool2345/queuing-service:latest
+        image: yourdockerhub/queuing-service:v1.5.1
         name: queuing-service
         ports:
         - containerPort: 6043
