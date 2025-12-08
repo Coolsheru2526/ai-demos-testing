@@ -6,11 +6,15 @@ on:
       rollback_tag:
         description: "Docker image tag to rollback to"
         required: true
-        default: "latest-stable"
+        default: latest-stable
 
 jobs:
   rollback:
     runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: write
+      deployments: write
 
     steps:
     - name: Checkout repository
@@ -18,11 +22,11 @@ jobs:
 
     - name: Set rollback version
       run: |
-        echo "Rolling back to tag: ${{ github.event.inputs.rollback_tag }}"
+        echo "ROLLBACK_VERSION=${{ github.event.inputs.rollback_tag }}" >> $GITHUB_ENV
 
     - name: Update deployment file
       run: |
-        sed -i "s/image: .*/image: yourdockerhubusername\/webops-test:${{ github.event.inputs.rollback_tag }}/" app/deployment.yaml
+        sed -i "s/image: .*/image: yourdockerhubusername\/webops-test:${ROLLBACK_VERSION}/" app/deployment.yaml
 
     - name: Commit rollback changes
       run: |
